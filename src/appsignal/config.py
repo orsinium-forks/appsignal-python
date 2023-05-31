@@ -43,6 +43,7 @@ class Options(TypedDict, total=False):
     send_environment_metadata: Optional[bool]
     send_params: Optional[bool]
     send_session_data: Optional[bool]
+    statsd_port: Optional[str]
     working_directory_path: Optional[str]
 
 
@@ -163,6 +164,7 @@ class Config:
             ),
             send_params=parse_bool(os.environ.get("APPSIGNAL_SEND_PARAMS")),
             send_session_data=parse_bool(os.environ.get("APPSIGNAL_SEND_SESSION_DATA")),
+            statsd_port=os.environ.get("APPSIGNAL_STATSD_PORT"),
             working_directory_path=os.environ.get("APPSIGNAL_WORKING_DIRECTORY_PATH"),
         )
 
@@ -224,6 +226,7 @@ class Config:
             "_APPSIGNAL_SEND_SESSION_DATA": bool_to_env_str(
                 options.get("send_session_data")
             ),
+            "_APPSIGNAL_STATSD_PORT": options.get("statsd_port"),
             "_APPSIGNAL_WORKING_DIRECTORY_PATH": options.get("working_directory_path"),
             "_APP_REVISION": options.get("revision"),
         }
